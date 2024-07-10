@@ -100,8 +100,8 @@ create procedure login(user varchar(255), pass varchar(255))
     select * from client where username = user and password = pass
 
 -- One that takes in a client_id, 4 move id's, fighter name and adds a new fighter
-create procedure add_fighter(client_id int, move_one int, move_two int, move_three int, move_four int, name varchar(255), health int)
-    insert into computer_fighter (client_id, move_one, move_two, move_three, move_four, name, health) values (client_id, move_one, move_two, move_three, move_four, name, health)
+create procedure add_fighter(client_id int, move_one int, move_two int, move_three int, move_four int, name varchar(255))
+    insert into computer_fighter (client_id, move_one, move_two, move_three, move_four, name, health) values (client_id, move_one, move_two, move_three, move_four, name)
 
 -- One that takes in a client_id and returns all fighters that belong to that client
 create procedure get_fighters(client_id int)
