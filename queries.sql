@@ -19,7 +19,7 @@ create table client (
     -- upper_damage_range
 create table move (
     id int(11) not null auto_increment,
-    name varchar(255) not null,
+    move_name varchar(255) not null,
     lower_damage_range int not null,
     upper_damage_range int not null,
     primary key (id)
@@ -41,9 +41,9 @@ create table fighter (
     move_two int not null,
     move_three int not null,
     move_four int not null,
-    name varchar(255) not null,
-    health int not null,
-    points int not null,
+    fighter_name varchar(255) not null,
+    health int not null default 100,
+    points int not null default 0,
     primary key (id),
     foreign key (client_id) references client(id) on delete cascade,
     foreign key (move_one) references move(id) on delete cascade,
@@ -65,7 +65,7 @@ create table computer_fighter (
     move_two int not null,
     move_three int not null,
     move_four int not null,
-    name varchar(255) not null,
+    fighter_name varchar(255) not null,
     health int not null default 100,
     primary key (id),
     foreign key (move_one) references move(id) on delete cascade,
@@ -105,16 +105,16 @@ create procedure login(user varchar(255), pass varchar(255))
     select * from client where username = user and password = pass
 ;
 -- One that takes in a client_id, 4 move id's, fighter name and adds a new fighter
-create procedure add_fighter(client_id int, move_one int, move_two int, move_three int, move_four int, name varchar(255))
-    insert into computer_fighter (client_id, move_one, move_two, move_three, move_four, name, health) values (client_id, move_one, move_two, move_three, move_four, name)
+create procedure add_fighter(client_id int, move_one int, move_two int, move_three int, move_four int, fighter_name varchar(255))
+    insert into fighter (client_id, move_one, move_two, move_three, move_four, fighter_name) values (client_id, move_one, move_two, move_three, move_four, fighter_name)
 ;
 -- One that takes in a client_id and returns all fighters that belong to that client
 create procedure get_fighters(client_id int)
-    select * from computer_fighter where client_id = client_id
+    select * from fighter where client_id = client_id
 ;
 -- One that returns all move id's, names, lower_damage_range and upper_damage_range
 create procedure get_moves()
-    select * from moves
+    select * from move
 ;
 -- One that takes in an id for a fighter and a point number and adds to their points total
 create procedure add_points(id int, points int)
